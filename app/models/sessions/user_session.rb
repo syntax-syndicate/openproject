@@ -33,6 +33,8 @@ module Sessions
   class UserSession < ::ApplicationRecord
     self.table_name = "sessions"
 
+    belongs_to :user
+
     scope :for_user, ->(user) do
       user_id = user.is_a?(User) ? user.id : user.to_i
 
