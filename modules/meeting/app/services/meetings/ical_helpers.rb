@@ -67,7 +67,7 @@ module Meetings
     end
 
     def ical_uid(suffix)
-      "#{Setting.app_title}-#{Setting.host_name}-#{suffix}".dasherize
+      Digest::SHA256.hexdigest "#{Setting.app_title}-#{Setting.host_name}-#{suffix}"
     end
 
     def ical_datetime(time, timezone_id)
