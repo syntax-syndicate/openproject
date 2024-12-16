@@ -50,7 +50,7 @@ module WorkPackages
         end
 
         subject_form.group(data: { "admin--subject-configuration-target": "patternInput" }) do |toggleable_group|
-          toggleable_group.text_field(
+          toggleable_group.pattern_autocompleter(
             name: :pattern,
             label: I18n.t("types.edit.subject_configuration.pattern.label"),
             caption: I18n.t("types.edit.subject_configuration.pattern.caption"),

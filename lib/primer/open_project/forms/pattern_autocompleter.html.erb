@@ -1,0 +1,69 @@
+<%=
+  render(
+    Primer::Box.new(
+      "data-controller": "pattern-autocompleter",
+      "data-pattern-autocompleter-initial-value": @pattern.blueprint
+    )
+  ) do
+%>
+  <input id="pattern" name="pattern" type="hidden" value="asdf">
+
+  <template data-pattern-autocompleter-target="tokenTemplate">
+    <%=
+      render(
+        Primer::Beta::Label.new(
+          contenteditable: false,
+          tag: :div, display: :inline, scheme: :accent,
+          "data-role": :token
+        )
+      ) do
+    %>
+      <%=
+        render(
+          Primer::BaseComponent.new(
+            tag: :span,
+            style: "cursor: default;",
+            "data-role": "token-text"
+          )
+        ) { "__VALUE__" }
+      %>
+      <%=
+        render(
+          Primer::Beta::Octicon.new(
+            icon: :x, size: :small, style: "cursor: pointer;",
+            "data-role": "token-remove",
+            "data-action": "click->pattern-autocompleter#remove_token"
+          )
+        ) { "x" }
+      %>
+    <% end %>
+  </template>
+
+  <%=
+    render(
+      Primer::Box.new(
+        contenteditable: true,
+        border: true, border_radius: 2, p: 1,
+        style: "white-space: pre-wrap;",
+        "data-pattern-autocompleter-target": "content",
+        data: {
+          action: "keydown->pattern-autocompleter#input_keydown
+                   input->pattern-autocompleter#input_change"
+        }
+      )
+    )
+  %>
+  <%=
+    render(Primer::Alpha::ActionList.new(role: :list, show_dividers: false)) do |component|
+      component.with_divider_content("Work Package things")
+      component.with_item(label: "Assignee", data: select_item_action.merge({ value: "work_package_assignee" }))
+      component.with_item(label: "Accountable", data: select_item_action.merge({ value: "work_package_accountable" }))
+      component.with_item(label: "Spent time", data: select_item_action.merge({ value: "work_package_spent_time" }))
+      component.with_divider
+      component.with_divider_content("Parent Work Package things")
+      component.with_item(label: "Assignee", data: select_item_action.merge({ value: "parent_assignee" }))
+      component.with_item(label: "Accountable", data: select_item_action.merge({ value: "parent_accountable" }))
+      component.with_item(label: "Spent time", data: select_item_action.merge({ value: "parent_spent_time" }))
+    end
+  %>
+<% end %>
