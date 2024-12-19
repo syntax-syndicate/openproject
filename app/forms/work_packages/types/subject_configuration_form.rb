@@ -36,6 +36,7 @@ module WorkPackages
           group.radio_button(
             value: "manual",
             checked: !has_pattern?,
+            disabled: !EnterpriseToken.active? && !has_pattern?,
             label: I18n.t("types.edit.subject_configuration.manually_editable_subjects.label"),
             caption: I18n.t("types.edit.subject_configuration.manually_editable_subjects.caption"),
             data: { action: "admin--subject-configuration#hidePatternInput" }
@@ -43,6 +44,7 @@ module WorkPackages
           group.radio_button(
             value: "auto",
             checked: has_pattern?,
+            disabled: !EnterpriseToken.active? && !has_pattern?,
             label: I18n.t("types.edit.subject_configuration.automatically_generated_subjects.label"),
             caption: I18n.t("types.edit.subject_configuration.automatically_generated_subjects.caption"),
             data: { action: "admin--subject-configuration#showPatternInput" }
